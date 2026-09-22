@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基督山伯爵 - 经典名著讲解</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'NotoSerifSC';
+            src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;900&display=swap');
+        }
+
+        :root {
+            --primary: #2c1810;
+            --accent: #c4a35a;
+            --bg-dark: #1a0f0a;
+            --bg-card: #2a1f17;
+            --text-light: #e8dcc8;
+            --text-muted: #a89880;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+            background: linear-gradient(180deg, #1a0f0a 0%, #2c1810 50%, #1a0f0a 100%);
+            color: var(--text-light);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(196,163,90,0.08) 0%, transparent 70%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('images/03_意义.jpg') center/cover no-repeat;
+            opacity: 0.15;
+            filter: blur(2px);
+            z-index: -1;
+        }
+
+        .hero-tag {
+            font-size: 0.9rem;
+            letter-spacing: 0.5em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 40px rgba(196,163,90,0.3);
+            opacity: 0;
+            animation: fadeInUp 1s 0.6s forwards;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s 0.9s forwards;
+        }
+
+        .hero-author {
+            font-size: 1rem;
+            color: var(--accent);
+            opacity: 0;
+            animation: fadeInUp 1s 1.2s forwards;
+        }
+
+        .scroll-hint {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0;
+            animation: fadeInUp 1s 1.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .section:nth-child(even) .section-text {
+            order: 2;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            padding: 0.3rem 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-text p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 2;
+            text-align: justify;
+        }
+
+        .section-media {
+            position: relative;
+        }
+
+        .section-media img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .section-media img:hover {
+            transform: scale(1.02);
+        }
+
+        .media-player {
+            margin-top: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(196,163,90,0.2);
+        }
+
+        .media-player video {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .media-player audio {
+            width: 100%;
+            margin-top: 0.8rem;
+        }
+
+        .media-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .divider {
+            width: 100%;
+            max-width: 1200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+            margin: 0 auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--bg-dark);
+            border-top: 1px solid rgba(196,163,90,0.15);
+        }
+
+        .footer h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .footer .student-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(196,163,90,0.1);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(196,163,90,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .nav-dot.active, .nav-dot:hover {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 768px) {
+            .section-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .section:nth-child(even) .section-text {
+                order: 0;
+            }
+            .nav-dots { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-dots">
+    <button class="nav-dot active" onclick="scrollToSection(0)" title="首页"></button>
+    <button class="nav-dot" onclick="scrollToSection(1)" title="作者"></button>
+    <button class="nav-dot" onclick="scrollToSection(2)" title="内容"></button>
+    <button class="nav-dot" onclick="scrollToSection(3)" title="意义"></button>
+    <button class="nav-dot" onclick="scrollToSection(4)" title="影响"></button>
+</div>
+
+<header class="hero" id="section-0">
+    <div class="hero-tag">CLASSIC LITERATURE</div>
+    <h1>基督山伯爵<br><span>Le Comte de Monte-Cristo</span></h1>
+    <p class="hero-subtitle">被陷害的水手，用十四年牢狱之苦换来一场惊天复仇<br>世界文学史上最伟大的复仇故事，人性与命运的终极较量</p>
+    <div class="hero-author">原著：亚历山大·仲马（Alexandre Dumas）</div>
+    <div class="scroll-hint">向下滚动浏览 &darr;</div>
+</header>
+
+<section class="section" id="section-1">
+    <div class="section-container">
+        <div class="section-text">
+            <span class="section-label">01 / AUTHOR</span>
+            <h2 class="section-title">作者</h2>
+            <p>亚历山大·仲马（Alexandre Dumas，1802—1870），法国19世纪浪漫主义文学代表作家，人称"大仲马"。他出生于法国北部一个混血家庭，父亲是拿破仑麾下的黑人将军。大仲马一生创作颇丰，以情节跌宕、结构精巧的历史小说闻名，代表作包括《三个火枪手》《基督山伯爵》等，被誉为"通俗小说之王"。</p>
+        </div>
+        <div class="section-media">
+            <img src="images/01_作者.jpg" alt="大仲马的书房">
+            <div class="media-player">
+                <div class="media-label">视频讲解</div>
+                <video controls preload="metadata" poster="images/01_作者.jpg">
+                    <source src="videos/01_作者.mp4" type="video/mp4">
+                </video>
+                <audio controls preload="metadata">
+                    <source src="audios/音频1.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="section-2">
+    <div class="section-container">
+        <div class="section-media">
+            <img src="images/02_内容.jpg" alt="伊夫堡监狱">
+            <div class="media-player">
+                <div class="media-label">视频讲解</div>
+                <video controls preload="metadata" poster="images/02_内容.jpg">
+                    <source src="videos/02_内容.mp4" type="video/mp4">
+                </video>
+                <audio controls preload="metadata">
+                    <source src="audios/音频2.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+        <div class="section-text">
+            <span class="section-label">02 / CONTENT</span>
+            <h2 class="section-title">内容</h2>
+            <p>年轻水手爱德蒙·唐泰斯在订婚宴上遭人陷害，被秘密关进伊夫堡监狱长达十四年。在狱中，他结识了法利亚长老，获知了基督山岛宝藏的秘密。越狱后，唐泰斯找到宝藏，化名"基督山伯爵"重返巴黎，凭借智慧与财富，对三个仇人展开了精密而冷酷的复仇，最终完成了一场惊心动魄的因果清算。</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="section-3">
+    <div class="section-container">
+        <div class="section-text">
+            <span class="section-label">03 / MEANING</span>
+            <h2 class="section-title">意义</h2>
+            <p>《基督山伯爵》探讨了正义与复仇、宽恕与救赎的永恒命题。小说通过唐泰斯从无辜受害者到复仇化身的转变，追问了一个核心问题：当人间正义缺席时，个人是否有权代行审判？它告诉读者，仇恨使人困于牢笼，唯有放下与宽恕，才能获得真正的自由。</p>
+        </div>
+        <div class="section-media">
+            <img src="images/03_意义.jpg" alt="基督山岛黄昏">
+            <div class="media-player">
+                <div class="media-label">视频讲解</div>
+                <video controls preload="metadata" poster="images/03_意义.jpg">
+                    <source src="videos/03_意义.mp4" type="video/mp4">
+                </video>
+                <audio controls preload="metadata">
+                    <source src="audios/音频3.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="section-4">
+    <div class="section-container">
+        <div class="section-media">
+            <img src="images/04_影响.jpg" alt="歌剧院">
+            <div class="media-player">
+                <div class="media-label">视频讲解</div>
+                <video controls preload="metadata" poster="images/04_影响.jpg">
+                    <source src="videos/04_影响.mp4" type="video/mp4">
+                </video>
+                <audio controls preload="metadata">
+                    <source src="audios/音频4.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+        <div class="section-text">
+            <span class="section-label">04 / INFLUENCE</span>
+            <h2 class="section-title">影响</h2>
+            <p>作为世界文学史上最畅销的小说之一，《基督山伯爵》被翻译成百余种语言，改编成无数电影、戏剧和电视剧。其"快意恩仇"的叙事模式深刻影响了后世通俗文学和影视创作，"基督山"已成为"隐忍复仇、华丽归来"的文化符号，至今仍在全球范围内拥有广泛读者。</p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <h3>基督山伯爵 - 经典名著讲解</h3>
+    <p>Le Comte de Monte-Cristo by Alexandre Dumas</p>
+    <div class="student-info">
+        <p>学号姓名：2025106006薛彤</p>
+        <p>作业目录：2025106006薛彤 / Assignment1</p>
+    </div>
+</footer>
+
+<script>
+    function scrollToSection(index) {
+        const target = document.getElementById('section-' + index);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    const sections = document.querySelectorAll('[id^="section-"]');
+    const dots = document.querySelectorAll('.nav-dot');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = parseInt(entry.target.id.split('-')[1]);
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+
+    sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
